@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ModalProps, SafeAreaView, StyleSheet, Platform } from 'react-native'
+import { ModalProps, SafeAreaView, StyleSheet, Platform, View } from 'react-native'
 import { AnimatedModal } from './AnimatedModal'
 import { Modal } from './Modal'
 import { useTheme } from './CountryTheme'
@@ -34,13 +34,13 @@ export const CountryModal = ({
     }
   }, [disableNativeModal])
   if (withModal) {
-    if (Platform.OS === 'web') {
-      return <Modal {...props}>{content}</Modal>
-    }
     if (disableNativeModal) {
       return null
     }
-    return <Modal {...props}>{content}</Modal>
+    return <Modal {...props} transparent animationType="none">
+        <View style={{flex:1, backgroundColor: 'black', opacity: 0.5}} onStartShouldSetResponder={() => {props?.onDismiss()}} />
+        {content}
+    </Modal>
   }
   return content
 }
